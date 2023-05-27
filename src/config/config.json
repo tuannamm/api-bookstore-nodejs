@@ -2,9 +2,12 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "database_development",
+    "database": "node",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "logging": false,
+    "timezone": "+07:00",
+    "port": 3309
   },
   "test": {
     "username": "root",
