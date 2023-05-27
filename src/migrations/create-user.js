@@ -20,6 +20,7 @@ module.exports = {
       },
       role_code: {
         type: Sequelize.STRING,
+        defaultValue: "R3",
       },
       avatar: {
         type: Sequelize.STRING,

@@ -14,6 +14,7 @@ export const register = ({ email, password }) =>
           password: hashPassword(password),
         },
       });
+      console.log(response);
     } catch (error) {
       reject(error);
     }
