@@ -1,7 +1,13 @@
-const router = require("express").Router();
+import user from "./user";
+import auth from "./auth";
 
-router.get("/", (req, res) => {
-  return res.send("Hello World!");
-});
+const initRoutes = (app) => {
+  app.use("/api/v1/user", user);
+  app.use("/api/v1/auth", auth);
 
-module.exports = router;
+  return app.use("*", (req, res) => {
+    return res.send("xxxxx");
+  });
+};
+
+export default initRoutes;
