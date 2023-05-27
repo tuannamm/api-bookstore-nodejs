@@ -4,15 +4,12 @@ require("dotenv").config();
 const router = require("./src/routes/index");
 const user = require("./src/routes/user");
 
+require("./connectiondb");
+
 const app = express();
 const port = process.env.PORT || 2001;
 
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+app.use(cors({}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
