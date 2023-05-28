@@ -13,6 +13,22 @@ export const insertData = () =>
           value: category,
         });
       });
+      const categoriesData = Object.entries(data);
+      // [[key, [1,2,3]]]
+      categoriesData.forEach((category) => {
+        category[1]?.map(async (book) => {
+          await db.Book.create({
+            id: book.upc,
+            title: book.bookTitle,
+            price: book.bookPrice,
+            available: book.available,
+            image: book.imageUrl,
+            description: book.bookDescription,
+            category_code: generateCode(category[0]),
+          });
+        });
+      });
+
       resolve("Data inserted successfully");
     } catch (error) {
       reject(error);
