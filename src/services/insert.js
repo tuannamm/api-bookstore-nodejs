@@ -14,7 +14,7 @@ export const insertData = () =>
         });
       });
       const categoriesData = Object.entries(data);
-      // [[key, [1,2,3]]]
+      // [[key, [1,2,3]], [key, [1,2,3]]]
       categoriesData.forEach((category) => {
         category[1]?.map(async (book) => {
           await db.Book.create({
