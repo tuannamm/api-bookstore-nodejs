@@ -35,7 +35,7 @@ export const register = ({ email, password }) =>
       resolve({
         err: response[1] ? 0 : 1,
         mes: response[1] ? "Register is success" : "User already exists",
-        token,
+        access_token: token ? `Bearer ${token}` : null,
       });
     } catch (error) {
       return internalServerError(reject, error);

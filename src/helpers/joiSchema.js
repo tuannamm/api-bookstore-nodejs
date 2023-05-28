@@ -1,0 +1,12 @@
+import Joi from "joi";
+
+export const emailValidate = Joi.string()
+  .email({
+    minDomainSegments: 2,
+    tlds: { allow: ["com", "net"] },
+  })
+  .required();
+
+export const passwordValidate = Joi.string()
+  .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+  .required();
