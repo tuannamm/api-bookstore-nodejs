@@ -7,7 +7,15 @@ module.exports = (sequelize, DataTypes) => {
   Category.init(
     {
       code: DataTypes.STRING,
-      value: DataTypes.STRING,
+      value: {
+        type: DataTypes.STRING,
+        set(value) {
+          this.setDataValue(
+            "value",
+            value.charAt(0).toUpperCase() + value.slice(1) // capitalize first letter
+          );
+        },
+      },
     },
     {
       sequelize,

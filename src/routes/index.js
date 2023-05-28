@@ -1,6 +1,7 @@
-// port
+// controllers
 import user from "./user";
 import auth from "./auth";
+import insert from "./insert";
 
 // handle error
 import { notFound } from "../middleware/handleError";
@@ -8,6 +9,7 @@ import { notFound } from "../middleware/handleError";
 const initRoutes = (app) => {
   app.use("/api/v1/user", user);
   app.use("/api/v1/auth", auth);
+  app.use("/api/v1/insert", insert);
 
   return app.use(notFound);
 };
