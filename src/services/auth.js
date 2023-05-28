@@ -50,10 +50,10 @@ export const login = ({ email, password }) =>
         raw: true,
       });
       // check password
-      const isChecked =
+      const isCheckedPassword =
         response && bcrypt.compareSync(password, response.password);
       // nếu password đúng thì gắn token cho user
-      const token = isChecked
+      const token = isCheckedPassword
         ? jwt.sign(
             {
               id: response.id,

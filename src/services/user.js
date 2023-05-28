@@ -6,8 +6,16 @@ export const getUser = (userId) =>
       const response = await db.User.findOne({
         // tim trong cot id cua bang user co gia tri = userId
         where: { id: userId },
-        // khong tra ve cot password
-        attributes: { exclude: ["password"] },
+        // khong tra ve cot password, createdAt, updatedAt
+        attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+        // lay them cot roleData
+        include: [
+          {
+            model: db.Role, // model can lay
+            as: "roleData", // ten cua model
+            attributes: ["id", "code", "value"], // lay nhung cot nao
+          },
+        ],
       });
       resolve({
         err: response ? 0 : 1,
