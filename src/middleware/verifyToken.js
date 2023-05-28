@@ -10,7 +10,9 @@ const verifyToken = (req, res, next) => {
   const accessToken = token.split(" ")[1];
   // verify token
   jwt.verify(accessToken, process.env.JWT_SECRET, (err, userDecode) => {
+    // check token
     if (err) return unauthorized("Token is invalid", res);
+    // decode giai ma token cua user va gan vao req.user
     req.user = userDecode;
     next();
   });
