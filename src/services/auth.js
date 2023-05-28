@@ -3,6 +3,9 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 require("dotenv").config();
 
+// handle error
+import { internalServerError } from "../middleware/handleError";
+
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 
@@ -35,7 +38,7 @@ export const register = ({ email, password }) =>
         token,
       });
     } catch (error) {
-      reject(error);
+      return internalServerError(reject, error);
     }
   });
 
@@ -74,6 +77,6 @@ export const login = ({ email, password }) =>
         test_log: response,
       });
     } catch (error) {
-      reject(error);
+      return internalServerError(reject, error);
     }
   });
