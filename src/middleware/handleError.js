@@ -23,3 +23,11 @@ export const notFound = (req, res) => {
     msg: error.message,
   });
 };
+
+export const unauthorized = (err, res) => {
+  const error = createError.Unauthorized(err);
+  return res.status(error.status).json({
+    err: 1,
+    msg: error.message,
+  });
+};

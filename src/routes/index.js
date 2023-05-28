@@ -3,11 +3,7 @@ import user from "./user";
 import auth from "./auth";
 
 // handle error
-import {
-  badRequest,
-  internalServerError,
-  notFound,
-} from "../middleware/handleError";
+import { notFound } from "../middleware/handleError";
 
 const initRoutes = (app) => {
   app.use("/api/v1/user", user);
