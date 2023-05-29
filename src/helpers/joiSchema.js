@@ -19,4 +19,12 @@ export const available = Joi.number().required();
 
 export const category_code = Joi.string().uppercase().alphanum().required();
 
+export const description = Joi.string().required();
+
 export const image = Joi.string().required();
+
+export const bookId = Joi.string().required();
+
+export const bookIds = Joi.array().required();
+
+export const filename = Joi.array().required();

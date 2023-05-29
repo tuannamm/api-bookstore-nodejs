@@ -74,6 +74,7 @@ export const login = ({ email, password }) =>
           ? "Wrong password"
           : "User not found",
         access_token: token ? `Bearer ${token}` : null,
+        data: token,
       });
     } catch (error) {
       return internalServerError(reject, error);
