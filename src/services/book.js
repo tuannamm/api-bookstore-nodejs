@@ -46,7 +46,7 @@ export const getBooks = ({ page, limit, order, name, available, ...query }) =>
   });
 
 // CREATE
-export const createBook = (body) =>
+export const createBook = (body, fileData) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await db.Book.findOrCreate({
@@ -56,14 +56,19 @@ export const createBook = (body) =>
         defaults: {
           ...body,
           id: generateId(),
+          image: fileData?.path,
         },
       });
       resolve({
         err: response[1] ? 0 : 1,
         msg: response[1] ? "Created Success!" : "Created Failed!",
       });
+      if (fileData && !response[1])
+        cloudinary.uploader.destroy(fileData.filename);
     } catch (error) {
       reject(error);
+      if (fileData && !response[1])
+        cloudinary.uploader.destroy(fileData.filename);
     }
   });
 // UPDATE

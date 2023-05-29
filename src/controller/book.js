@@ -8,6 +8,7 @@ import {
   price,
   available,
 } from "../helpers/joiSchema";
+const cloudinary = require("cloudinary").v2;
 
 export const getBooks = async (req, res) => {
   try {
@@ -20,15 +21,22 @@ export const getBooks = async (req, res) => {
 
 export const createBook = async (req, res) => {
   try {
+    const fileData = req.file;
     const { error } = Joi.object({
       title,
       image,
       category_code,
       price,
       available,
-    }).validate(req.body);
-    if (error) return badRequest(error.details[0].message, res);
-    const response = await service.createBook(req.body);
+    }).validate({
+      ...req.body,
+      image: fileData?.path,
+    });
+    if (error) {
+      if (fileData) cloudinary.uploader.destroy(fileData.filename);
+      return badRequest(error.details[0].message, res);
+    }
+    const response = await service.createBook(req.body, fileData);
     return res.status(200).json(response);
   } catch (error) {
     console.log(error);
