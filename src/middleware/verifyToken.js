@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { unauthorized } from "./handleError";
 
 const verifyToken = (req, res, next) => {
@@ -10,8 +10,12 @@ const verifyToken = (req, res, next) => {
   const accessToken = token.split(" ")[1];
   // verify token
   jwt.verify(accessToken, process.env.JWT_SECRET, (err, userDecode) => {
+    if (err) {
+      const isExpired = err instanceof TokenExpiredError;
+      if (!isExpired) return unauthorized("Token is invalid", res, isExpired);
+      return unauthorized("Token is invalid", res, isExpired);
+    }
     // check token
-    if (err) return unauthorized("Token is invalid", res);
     // decode giai ma token cua user va gan vao req.user
     req.user = userDecode;
     next();

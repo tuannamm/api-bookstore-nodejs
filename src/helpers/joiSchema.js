@@ -28,3 +28,5 @@ export const bookId = Joi.string().required();
 export const bookIds = Joi.array().required();
 
 export const filename = Joi.array().required();
+
+export const refreshToken = Joi.string().required();

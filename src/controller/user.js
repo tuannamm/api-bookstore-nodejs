@@ -1,5 +1,4 @@
 import * as service from "../services";
-import { internalServerError, badRequest } from "../middleware/handleError";
 
 export const getDataCurrentUser = async (req, res) => {
   try {

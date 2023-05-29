@@ -2,7 +2,11 @@ import * as services from "../services";
 
 // validate email password
 import Joi from "joi";
-import { emailValidate, passwordValidate } from "../helpers/joiSchema";
+import {
+  emailValidate,
+  passwordValidate,
+  refreshToken,
+} from "../helpers/joiSchema";
 import { badRequest } from "../middleware/handleError";
 
 export const register = async (req, res) => {
@@ -40,5 +44,19 @@ export const login = async (req, res) => {
       err: -1,
       msg: "Internal Server Error",
     });
+  }
+};
+
+export const refreshTokenController = async (req, res) => {
+  try {
+    const { error } = Joi.object({
+      refreshToken,
+    }).validate(req.body);
+
+    if (error) return badRequest(error.details[0]?.message, res);
+    const response = await services.refreshToken(req.body.refreshToken);
+    return res.status(200).json(response);
+  } catch (error) {
+    console.log(error);
   }
 };
