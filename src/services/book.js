@@ -2,7 +2,9 @@ import db from "../models";
 require("dotenv").config();
 
 import { Op } from "sequelize";
+import { v4 as generateId } from "uuid";
 
+// READ
 export const getBooks = ({ page, limit, order, name, available, ...query }) =>
   new Promise(async (resolve, reject) => {
     try {
@@ -20,6 +22,18 @@ export const getBooks = ({ page, limit, order, name, available, ...query }) =>
       const response = await db.Book.findAndCountAll({
         where: query,
         ...queries,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "category_code"],
+        },
+        include: [
+          {
+            model: db.Category,
+            as: "category",
+            attributes: {
+              exclude: ["createdAt", "updatedAt"],
+            },
+          },
+        ],
       });
       resolve({
         err: response ? 0 : 1,
@@ -30,3 +44,27 @@ export const getBooks = ({ page, limit, order, name, available, ...query }) =>
       console.log(error);
     }
   });
+
+// CREATE
+export const createBook = (body) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await db.Book.findOrCreate({
+        // kiem title xem co ton tai hay khong
+        where: { title: body?.title },
+        // khong thi tao cai moi
+        defaults: {
+          ...body,
+          id: generateId(),
+        },
+      });
+      resolve({
+        err: response[1] ? 0 : 1,
+        msg: response[1] ? "Created Success!" : "Created Failed!",
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+// UPDATE
+// DELETE

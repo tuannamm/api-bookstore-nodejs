@@ -2,7 +2,13 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Book extends Model {
-    static associate(models) {}
+    static associate(models) {
+      Book.belongsTo(models.Category, {
+        foreignKey: "category_code",
+        targetKey: "code",
+        as: "category",
+      });
+    }
   }
   Book.init(
     {

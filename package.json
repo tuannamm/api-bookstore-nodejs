@@ -28,7 +28,8 @@
     "jsonwebtoken": "^9.0.0",
     "mysql2": "^3.3.2",
     "nodemon": "^2.0.22",
-    "sequelize": "^6.31.1"
+    "sequelize": "^6.31.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.1",
